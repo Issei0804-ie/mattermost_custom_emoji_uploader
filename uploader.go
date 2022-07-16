@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/mattermost/mattermost-server/v5/model"
 	"image"
 	"image/gif"
 	_ "image/gif"
@@ -18,6 +17,8 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/mattermost/mattermost-server/v5/model"
 )
 
 func main() {
@@ -35,17 +36,13 @@ func main() {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	api, err := url.Parse("https://your-mattermost.example/api/v4")
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-	api.Host = u.Host
-	api.Scheme = u.Scheme
+
+	apiUrl := *u
+	apiUrl.Path = path.Join(apiUrl.Path, "api", "v4")
 
 	c := model.Client4{
 		Url:        u.String(),
-		ApiUrl:     api.String(),
+		ApiUrl:     apiUrl.String(),
 		HttpClient: &http.Client{},
 		AuthToken:  token,
 		AuthType:   model.HEADER_BEARER,
