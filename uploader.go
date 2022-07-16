@@ -136,7 +136,7 @@ func createEmoji(c model.Client4, imagePath string, creatorId string) error {
 		return err
 	}
 
-	emoji, resp := c.CreateEmoji(emoji, buf.Bytes(), s.Name())
+	_, resp := c.CreateEmoji(emoji, buf.Bytes(), s.Name())
 	if resp.Error != nil {
 		err = errors.New(resp.Error.Error())
 		return err
