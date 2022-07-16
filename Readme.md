@@ -3,6 +3,7 @@
 ## 概要
 
 - mattermost で面倒な custom emoji の登録を簡単に実行できるバイナリ
+- 複数の画像を一括で登録できる
 - personal access token が必要
 
 ## 使い方
