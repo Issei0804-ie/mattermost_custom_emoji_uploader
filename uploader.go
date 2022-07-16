@@ -21,6 +21,11 @@ import (
 )
 
 func main() {
+	if len(os.Args) != 4 {
+		fmt.Println("usage error.")
+		fmt.Println("mattermost_custom_emoji_uploader http://your-mattermost.example [personal access token] [path of dir or image file]")
+		os.Exit(1)
+	}
 	baseURL := os.Args[1]
 	token := os.Args[2]
 	imagePath := os.Args[3]
