@@ -17,7 +17,9 @@ go install github.com/Issei0804-ie/mattermost_custom_emoji_uploader@latest
 
 ### 実行方法
 
-upload したい絵文字を手元に準備してください。
+upload したい絵文字を手元に準備し、ファイルの名前は絵文字の Name になるので適切に名前付けをしてください。例えば、`sample.png` という名前の画像を登録した場合、`:sample:` で絵文字を呼び出すことができます。
+
+実行方法は下記です。
 
 ```shell
 mattermost_custom_emoji_uploader http://your-mattermost.example [personal access token] [path of dir or image file]
