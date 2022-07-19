@@ -6,11 +6,8 @@ import (
 	"fmt"
 	"image"
 	"image/gif"
-	_ "image/gif"
 	"image/jpeg"
-	_ "image/jpeg"
 	"image/png"
-	_ "image/png"
 	"net/http"
 	"net/url"
 	"os"
@@ -94,7 +91,7 @@ func main() {
 	}
 
 	for _, imagePath := range paths {
-		fmt.Println(fmt.Sprintf("filepath: %v のファイルを処理中...", imagePath))
+		fmt.Printf("filepath: %v のファイルを処理中...\n", imagePath)
 		err = createEmoji(c, imagePath, user.Id)
 		if err != nil {
 			fmt.Println("エラー発生。")
@@ -108,7 +105,7 @@ func main() {
 
 func createEmoji(c model.Client4, imagePath string, creatorId string) error {
 	f, err := os.Open(imagePath)
-	defer f.Close()
+	defer closeFile(f)
 	if err != nil {
 		return err
 	}
@@ -139,11 +136,20 @@ func createEmoji(c model.Client4, imagePath string, creatorId string) error {
 		return err
 	}
 
-	emoji, resp := c.CreateEmoji(emoji, buf.Bytes(), s.Name())
+	_, resp := c.CreateEmoji(emoji, buf.Bytes(), s.Name())
 	if resp.Error != nil {
 		err = errors.New(resp.Error.Error())
 		return err
 	} else {
 		return nil
+	}
+}
+
+func closeFile(f *os.File) {
+	err := f.Close()
+	// closeに失敗した場合は潔くコマンドを終了する
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
 	}
 }
